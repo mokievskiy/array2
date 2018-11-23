@@ -61,3 +61,53 @@ void test2() {
     return;
 }
 
+void test3() {
+    cout << "Test #3: Testing pop_back and push_back operators\n";
+    
+    List<int> S(arr, n);
+    List<int> R(arr, n);
+    
+    int *b, *a;
+    b = new int[n - 1];
+    a = new int[n + 1];
+    
+    for (size_t i = 0; i < n - 1; i++) {
+        b[i] = S[i];
+    }
+    S.pop_back();
+    
+    for (size_t i = 0; i < n; i++) {
+        a[i] = S[i];   
+    }
+    a[n] = 3;
+    R.push_back(3);
+    
+    
+    int ch = 0;
+    for (size_t i = 0; i < n - 1; i++) {
+        if (S[i] != b[i] || S.lenght() != n - 1) {
+            throw -2;
+            ch = 1;
+            cout << "Not correct\n";
+            break;
+        }
+    }
+    for (size_t i = 0; i < n + 1; i++) {
+        if (R[i] != a[i] || R.lenght() != n + 1) {
+            throw -2;
+            ch = 1;
+            cout << "Not correct\n";
+            break;
+        }
+    }
+    if (ch != 1)
+        cout <<"Test correct\n";
+    
+    delete[] a;
+    delete[] b;
+    return;
+}
+
+void test4() {
+    cout << "Test #4: Testing 
+}
