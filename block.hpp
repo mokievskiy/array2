@@ -43,8 +43,8 @@ T& Block<T>::getElement(size_t index) {
 
 template<class T>
 Block<T>::Block(Block<T>* block) {
-    _size = block->_size;
-    _ind = block->_ind;
+    _size = block->getSize();
+    _ind = block->getIndex();
 
     _block = new T[_size];
 
