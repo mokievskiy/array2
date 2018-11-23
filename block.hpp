@@ -100,9 +100,9 @@ public:
     size_t length() const;
 
     T& operator[](size_t index) const;
-    List<T>& operator+ (const List<T>& x); ////// СДЕЛАТЬЬЬЬЬ
+    List<T>& operator+ (const List<T>& x); 
     List<T>& operator+= (const T& x);
-    List<T>& opertor-= ();
+    List<T>& operator-= ();
     template <class T2> friend std::ostream &operator<<(std::ostream& out, const List<T2>& a);
 
     void push_back(const T& x);
