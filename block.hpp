@@ -101,7 +101,8 @@ public:
 
     T& operator[](size_t index) const;
     List<T>& operator+ (const List<T>& x); ////// СДЕЛАТЬЬЬЬЬ
-    List<T>& operator+= (const T& x);      ////// СДЕЛАТЬЬЬЬЬ
+    List<T>& operator+= (const T& x);
+    List<T>& opertor-= ();
     template <class T2> friend std::ostream &operator<<(std::ostream& out, const List<T2>& a);
 
     void push_back(const T& x);
@@ -128,6 +129,7 @@ List<T>::List(const List<T>& a) {
 
     _head = new Block<T>(p);
     _tail = _head;
+    _size = a._head->getIndex();
 
     p = p->nexts;
 
@@ -151,6 +153,12 @@ List<T>::List(const T *arr, const size_t n) {
 template<class T>
 List<T>& List<T>::operator+=(const T& x) {
     this->push_back(x);
+    return *this;
+}
+
+template<class T>
+List<T>& List<T>::operator-=() {
+    this->pop_back();
     return *this;
 }
 
