@@ -28,9 +28,6 @@ int main (int argc, char* argv[]) {
                     cout << "Memory allocation error\n";
                     break;
                 case 3:
-                    cout << "Index is out of range\n";
-                    break;
-                case 4:
                     cout << "Wrong input\n";
                     break;
             }
