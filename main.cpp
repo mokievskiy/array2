@@ -11,7 +11,8 @@ typedef void (*fun) ();
 int main (int argc, char* argv[]) {
     
     try {
-        fun F[] = {test1, test2};
+        fun F[] = {test1, test2, test3, test4, test4
+                   , test5, test6, test7, test8};
         
         if (argc != 2) 
             throw 4;
