@@ -11,13 +11,19 @@ typedef void (*fun) ();
 int main (int argc, char* argv[]) {
     
     try {
-        fun F[] = {test1, test2, test3, test4, test4
-                   , test5, test6, test7, test8};
+        fun F[] = {test1, test2, test3, test4, test5
+                   , test6, test7, test8, test9};
         
         if (argc != 2) 
-            throw 4;
+            throw 3;
         int T = atoi(argv[1]);
-        F[T]();
+        if (T == 0) {
+            for (int i = 0; i < 8; i++)
+                F[i]();
+        }
+        else {
+        F[T-1]();
+        }
     }
     catch (const int xpt) {
             switch (xpt)

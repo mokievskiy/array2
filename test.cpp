@@ -4,8 +4,14 @@
 using namespace std;
 
 int arr[] = {5, -1, 0, 1};
+double a[] = {5, -1, 0, 1};
+double b[] = {2, 3, 1, 0};
 int arrs[] = {-1, 0, 1, 5};
 size_t n = sizeof (arr) / sizeof(int);
+Array A(a, 4);
+Array B(b, 4);
+
+Array Arr[] = {A, B};
 
 void test1() {
     cout << "Test #1: Creating List of Blocks by array \n";
@@ -38,8 +44,8 @@ void test2() {
     cout << "Test #2: Creating with cope constructor \n";
 
     List <int> S(arr, n);
-    List <int> R (S);
-
+    List <int> R(S);
+    
     int *b;
     b = new int[n];
     for (size_t i = 0; i < n; i++) {
@@ -49,7 +55,7 @@ void test2() {
     int ch = 0;
     for (size_t i = 0; i < n; i++) {
         if (arr[i] != b[i]) {
-            throw -2;
+            throw 2;
             ch = 1;
             cout << "Not correct\n";
             break;
@@ -63,7 +69,7 @@ void test2() {
 }
 
 void test3() {
-    cout << "Test #3: Testing += and -= operators\n";
+    cout << "Test #3: Testing += and pop_back operators\n";
     
     List<int> S(arr, n);
     List<int> R(arr, n);
@@ -75,7 +81,7 @@ void test3() {
     for (size_t i = 0; i < n - 1; i++) {
         b[i] = S[i];
     }
-    S-=;
+    S.pop_back();
     
     for (size_t i = 0; i < n; i++) {
         a[i] = S[i];   
@@ -86,14 +92,14 @@ void test3() {
     
     int ch = 0;
     for (size_t i = 0; i < n - 1; i++) {
-        if (S[i] != b[i] || S.lenght() != n - 1) {
+        if (S[i] != b[i] || S.length() != n - 1) {
             ch = 1;
             cout << "Not correct\n";
             break;
         }
     }
     for (size_t i = 0; i < n + 1; i++) {
-        if (R[i] != a[i] || R.lenght() != n + 1) {
+        if (R[i] != a[i] || R.length() != n + 1) {
             ch = 1;
             cout << "Not correct\n";
             break;
@@ -112,7 +118,7 @@ void test4() {
     
     List<int> S(arr,n);
     
-    cout << S;
+    cout << S << "\n";
     
     return;
 }
@@ -136,21 +142,25 @@ void test5() {
 }
 
 void test6() {
-    cout << "Test #6: Testing clear function\n";
-    
+    cout << "Test #6: Testing operator +\n";
+
     List<int> S(arr, n);
-    S.Clear;
-    
-    ch = 0;
-    
-    if (S[0] != 0) {
-        ch = 1;
-        cout << "Test incorrect\n";
+    List<int> R(arr, n);
+
+    R+S;
+
+    int ch = 0;
+
+    for (size_t i = 0; i < n; i++) {
+        if (R[i + n] != arr[i]) {
+            ch = 1;
+            cout << "Not correct\n";
+            break;
+        }
     }
-    
     if (ch != 1)
-        cout << "Test correct\n";
-    
+        cout <<"Test correct\n";
+
     return;
 }
 
@@ -184,11 +194,34 @@ void test8() {
         if (S[i] != arrs[i]) {
             ch = 1;
             cout << "Not correct\n";
+            cout << S;
             break;
         }
     }
     if (ch != 1)
         cout <<"Test correct\n";
    
+    return;
+}
+
+void test9() {
+    cout << "Test #9: Testing List of Blocks by Array with previous working class - array of Doubles\n";
+    
+    List<Array> S(Arr, 2);
+    
+    int ch = 0;
+    for (size_t i = 0; i < 2; i++) {
+        for (size_t j = 0; j < 4; j++) {
+            if (S[i][j] != Arr[i][j]) {
+            ch = 1;
+            cout << "Not correct\n";
+            break;
+        }
+        }
+    }
+    
+    if (ch != 1)
+        cout << "Test correct\n";
+    
     return;
 }

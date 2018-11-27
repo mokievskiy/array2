@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <cassert>
 #include <iosfwd>
+#include "DynamicArray.h"
 
 template<class T>
 class Block {
@@ -74,6 +75,7 @@ size_t Block<T>::getIndex() const {
     return _ind;
 }
 
+
 template<class T>
 Block<T>::~Block() {
     delete[] _block;
@@ -87,7 +89,7 @@ template<class T>
 class List {
 private:
     static const size_t BLOCK_SIZE;
-    Block<T> *_head, *_tail;
+    Block<T> *_head, *_tail;void test2 ();
     size_t _size;
 
     void _push_back(Block<T>* block);
@@ -102,13 +104,11 @@ public:
     T& operator[](size_t index) const;
     List<T>& operator+ (const List<T>& x); 
     List<T>& operator+= (const T& x);
-    List<T>& operator-= ();
     template <class T2> friend std::ostream &operator<<(std::ostream& out, const List<T2>& a);
 
     void push_back(const T& x);
     void pop_back();
     void sorti();
-    void Clear();
 
     template<class K> friend class Block;
 };
@@ -156,15 +156,10 @@ List<T>& List<T>::operator+=(const T& x) {
     return *this;
 }
 
-template<class T>
-List<T>& List<T>::operator-=() {
-    this->pop_back();
-    return *this;
-}
 
 template<class T>
 List<T>& List<T>::operator+ (const List<T>& a) {
-	for (size_t i = 0; i < a._size; i++) {
+    for (size_t i = 0; i < a.length(); i++) {
 		this->push_back(a[i]);
 	}	
 	return *this;
@@ -181,7 +176,6 @@ T& List<T>::operator[](size_t index) const {
     for (int i = 0; (i != block_index && cur_block != NULL); ++i)
         cur_block = cur_block->nexts;
 
-    assert(cur_block != NULL);
     return cur_block->getElement(pos);
 }
 
@@ -208,7 +202,6 @@ void List<T>::push_back(const T& x) {
 
 template<class T>
 void List<T>::pop_back() {
-    assert(length() != 0);
 
     _tail->pop_back();
     if (_tail->getIndex() == 0 && _head != _tail) {
@@ -236,46 +229,34 @@ void List<T>::_push_back(Block<T> *block) {
 
 template <class T>
 std::ostream &operator<<(std::ostream& out, const List<T>& a) {
-    for (size_t i = 0; i < a._size(); i++) {
+    for (size_t i = 0; i < a.length(); i++) {
         out << a[i] << " ";
     }
     return out;
 }
 
-template <class T>
-void List<T>::Clear () {
-    Block<T> *X = _head.nexts;
-    while (X != &_tail) { X = X->nexts; delete X->prevs; }
-    _tail = _head = &_head;
-    _size = 0;
-    return;
-}
 
 template<class T>
 void List<T>:: sorti() {
-	size_t n = _size;
-	T* tmp[n];
-	
-	for (size_t i; i < n; i++) {
-		tmp[i] = this[i];
-	}
-	T p;
-	
-    for (size_t i = 0; i < n; i++) {
-    	for (size_t j = i; j < n; j++) {
-    		if (tmp[j] > tmp[i]) {
-    			p = tmp[i];
-    			tmp[i] = tmp[j];
-    			tmp[j] = p;
-			}
-		}
-	}
-	
-    this->Clear();
-    for (size_t i = 0; i < n; i++) {
-    	this->push_back(tmp[i]);
-	}
-    
+    Block<T> *cur0 = _head, *cur = _head;
+    T tmp;
+    while (cur0->nexts) {
+        for (size_t i = 0; i < cur0->_ind; i++) {
+            cur = cur0;
+            while (cur->nexts) {
+                for (size_t j = 0; j < cur->_ind; j++) {
+                    if (cur0->_block[i] > cur->_block[j]) {
+                        tmp = cur0->_block[i];
+                        cur0->_block[i] = cur->_block[j];
+                        cur->_block[j] = tmp;
+                    }
+                }
+                cur = cur->nexts;
+            }
+        }
+        cur0 = cur0->nexts;
+    }
+
     return;
 }
 

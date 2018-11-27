@@ -1,12 +1,12 @@
 all: prog
 
 prog: main.o test.o
-	g++ main.o test.o block.hpp test.hpp -o prog
+	g++ main.o test.o DynamicArrayF.cpp -o prog
 
 main.o: main.cpp block.hpp test.hpp
 	g++ -c main.cpp
 
-DynamicArrayF.o: test.cpp block.hpp test.hpp
+test.o: test.cpp block.hpp test.hpp
 	g++ -c test.cpp
 
 clean:
